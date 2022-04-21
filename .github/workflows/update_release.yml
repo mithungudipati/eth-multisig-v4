@@ -6,6 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm install
+      - run: npm run lint
+      - run: npm run deploy-test
       - name: Update release notes
         uses: actions/github-script@v6
         with:
@@ -17,10 +25,8 @@ jobs:
               var html = "";
               try {
                 json = JSON.parse(fs.readFileSync('./releasenotes.json').toString());
-                for(const coin in json){
-                  html += "<h1>"+coin+"</h1>";
-                  html += "wallet: "+json[coin].wallet+"<br>";
-                  html += "scan: "+json[coin].etherscan+"<br>";
+                for(const key in json){
+                  html += key+": "+json[key]+"<br>";
                 }
               } catch (err){
                 console.log("json file not found.");
