@@ -1,10 +1,10 @@
 name: Testnet Deploy
 on:
- release:
+ pull_request: 
    types: [ labeled ]
 jobs:
-  if: ${{ github.event.label.name == 'testnet' }}
   lint-and-test:
+    if: ${{ github.event.label.name == 'testnet' }}
     environment: dev
     runs-on: ubuntu-latest
     steps:
