@@ -9,7 +9,8 @@ import '@typechain/hardhat';
 import 'hardhat-gas-reporter';
 import 'solidity-coverage';
 
-const { PRIVATE_KEY, ALCHEMY_API_KEY, ETHERSCAN_API_KEY } = process.env;
+const { PRIVATE_KEY, ALCHEMY_API_KEY, ETHERSCAN_API_KEY, POLYGON_API_KEY } =
+  process.env;
 
 const config: HardhatUserConfig = {
   solidity: '0.8.10',
@@ -42,11 +43,11 @@ const config: HardhatUserConfig = {
       accounts: [`${PRIVATE_KEY}`]
     },
     matic: {
-      url: `https://polygon-mainnet.g.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
+      url: `https://polygon-mainnet.g.alchemyapi.io/v2/${POLYGON_API_KEY}`,
       accounts: [`${PRIVATE_KEY}`]
     },
     tmatic: {
-      url: `https://polygon-mumbai.g.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
+      url: `https://polygon-mumbai.g.alchemyapi.io/v2/${POLYGON_API_KEY}`,
       accounts: [`${PRIVATE_KEY}`]
     }
   },
