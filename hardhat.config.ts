@@ -65,11 +65,11 @@ const config: HardhatUserConfig = {
     // Same API KEY for all env's
     apiKey: {
       //ethereum
-      mainnet: 'ETHERSCAN_API_KEY',
-      goerli: 'ETHERSCAN_API_KEY',
+      mainnet: `${ETHERSCAN_API_KEY}`,
+      goerli: `${ETHERSCAN_API_KEY}`,
       //polygon
-      polygon: 'POLYGONSCAN_API_KEY',
-      polygonMumbai: 'POLYGONSCAN_API_KEY'
+      polygon: `${POLYGONSCAN_API_KEY}`,
+      polygonMumbai: `${POLYGONSCAN_API_KEY}`
     }
   },
   mocha: {
