@@ -20,8 +20,10 @@ jobs:
         ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
         ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
         POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
+        POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
   get-network:
     runs-on: ubuntu-latest
+    needs: [lint-and-test]
     outputs: 
       network: ${{steps.network-name.outputs.result}}
     steps:
@@ -38,7 +40,7 @@ jobs:
             return network ? network[1] : "gteth";
   deploy-to-test:
     runs-on: ubuntu-latest
-    needs: [get-network]
+    needs: [lint-and-test, get-network]
     if:  ${{ (needs.get-network.outputs.network == 'gteth' ) || (needs.get-network.outputs.network == 'tmatic' ) }}
     environment: dev
     steps:
@@ -55,6 +57,7 @@ jobs:
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
           POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
+          POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
       - name: Update release notes
         uses: actions/github-script@v6
         with:
@@ -87,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint-and-test, get-network]
     if:  ${{ (needs.get-network.outputs.network == 'eth' ) || (needs.get-network.outputs.network == 'matic' ) }}
-    environment: dev
+    environment: mainnet
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -102,6 +105,7 @@ jobs:
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
           POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
+          POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
       - name: Update release notes
         uses: actions/github-script@v6
         with:
