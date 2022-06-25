@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint-and-test, get-network]
     if:  ${{ (needs.get-network.outputs.network == 'gteth' ) || (needs.get-network.outputs.network == 'tmatic' ) }}
-    environment: testnet
+    environment: dev
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
